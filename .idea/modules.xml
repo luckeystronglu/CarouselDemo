@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CarouselDemo.iml" filepath="$PROJECT_DIR$/CarouselDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/localpiccarousel/localpiccarousel.iml" filepath="$PROJECT_DIR$/localpiccarousel/localpiccarousel.iml" />
       <module fileurl="file://$PROJECT_DIR$/mycarouseldemo/mycarouseldemo.iml" filepath="$PROJECT_DIR$/mycarouseldemo/mycarouseldemo.iml" />
     </modules>
   </component>

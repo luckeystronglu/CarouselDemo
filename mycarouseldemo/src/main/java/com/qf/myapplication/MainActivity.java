@@ -18,7 +18,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     //头部广告栏
     private ConvenientBanner convenientBanner;
-    private ArrayList<Integer> localImages = new ArrayList<>();
+
+    private List<Integer> localImages = new ArrayList<>();
     private List<String> networkImages;
     private String[] banPics = {"http://idoimg.3mt.com.cn/Article/upload/201109/110908172721220.jpg",
             "http://i.zeze.com/attachment/forum/201508/17/060647osvswirx2wsv5hii.jpg",
@@ -73,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
         //     .setPageTransformer(Transformer.DefaultTransformer);
         //        convenientBanner.setManualPageable(false);设置不能手动影响
         //  网络加载例子
-        //        for (int i = 0; i < banPics.length(); i++) {
-        //            banPics[i] = basePicUrl + list_banners.get(i).getImg();
-        //        }
+//                for (int i = 0; i < banPics.length(); i++) {
+//                    banPics[i] = basePicUrl + list_banners.get(i).getImg();
+//                }
 
         networkImages = Arrays.asList(banPics);
         convenientBanner.setPages(new CBViewHolderCreator<NetworkImageHolderView>() {
