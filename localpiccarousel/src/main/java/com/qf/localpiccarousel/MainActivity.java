@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_LEFT);
 
         convenientBanner.startTurning(2000);
+
     }
 
 }
