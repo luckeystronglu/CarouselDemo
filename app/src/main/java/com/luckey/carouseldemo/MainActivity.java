@@ -6,14 +6,8 @@ import android.util.Log;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,10 +20,20 @@ public class MainActivity extends AppCompatActivity {
 
     //头部广告栏
     private ConvenientBanner convenientBanner;
-    private ArrayList<Integer> localImages = new ArrayList<>();
-    private List<String> networkImages;
-    private List<String> strList = new ArrayList<>();
-    private String[] str;
+    private List<String> networkImages = new ArrayList<>();
+    private List<String> titles = new ArrayList<>();
+
+
+    private String[] is;
+    private String[] ts;
+
+    private List<BannerItem> bannerItems = new ArrayList<>();
+
+//    private ArrayList<Integer> localImages = new ArrayList<>();
+
+//    private List<String> networkImages;
+//    private List<String> strList = new ArrayList<>();
+//    private String[] str;
 
 
     @Override
@@ -59,17 +63,40 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < list.size(); i++) {
                     if (list.get(i).getPosters() != null){
                         Log.d("pring", "onResponse: "+list.get(i).getPosters());
-                        strList.add(list.get(i).getPosters().getImage_path());
+//                        strList.add(list.get(i).getPosters().getImage_path());
+                        networkImages.add(list.get(i).getPosters().getImage_path());
                     }
 
                 }
 
-                initImageLoader();
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getPosters() != null) {
+                        titles.add(list.get(i).getPosters().getTitle());
+                    }
+                }
+
+                is = new String[networkImages.size()];
+                for (int i = 0; i < networkImages.size(); i++) {
+                    is[i] = networkImages.get(i);
+                }
+
+                ts = new String[titles.size()];
+                for (int i = 0; i < titles.size(); i++) {
+                    ts[i] = titles.get(i);
+                }
+
+                for (int i = 0; i < networkImages.size(); i ++) {
+                    bannerItems.add(new BannerItem(is[i], ts[i]));
+                }
+
+
+//                initImageLoader();
 
                 convenientBanner = (ConvenientBanner)
                         findViewById(R.id.convenientBanner_showGoods);
-                //本地图片例子
-                convenientBanner.setPages(
+              /*  //本地图片例子
+                convenientBanner
+                        .setPages(
                         new CBViewHolderCreator<LocalImageHolderView>() {
                             @Override
                             public LocalImageHolderView createHolder() {
@@ -89,14 +116,19 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < strList.size(); i++) {
                     str[i] = strList.get(i);
                 }
-                networkImages = Arrays.asList(str);
-                convenientBanner.setPages(new CBViewHolderCreator<NetworkImageHolderView>() {
+                networkImages = Arrays.asList(str);*/
+
+                convenientBanner
+                        .setPages(new CBViewHolderCreator<NetworkImageHolderView>() {
                     @Override
                     public NetworkImageHolderView createHolder() {
                         return new NetworkImageHolderView();
                     }
-                }, networkImages);
-                convenientBanner.startTurning(2000);
+                }, bannerItems)
+                        .setPageIndicator(new int[]{R.mipmap.abc_btn_radio_to_on_mtrl_000,
+                                R.mipmap.abc_btn_radio_to_on_mtrl_015})
+                        .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_LEFT)
+                        .startTurning(2000);
             }
 
             @Override
@@ -108,19 +140,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //初始化网络图片缓存库(广告轮播)
-    private void initImageLoader() {
-        //网络图片例子,结合常用的图片缓存库UIL,你可以根据自己需求自己换其他网络图片库
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().
-                showImageForEmptyUri(R.mipmap.ic_launcher)
-                .cacheInMemory(true).cacheOnDisk(true).build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                this).defaultDisplayImageOptions(defaultOptions)
-                .threadPriority(Thread.NORM_PRIORITY - 2)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .tasksProcessingOrder(QueueProcessingType.LIFO).build();
-        ImageLoader.getInstance().init(config);
-    }
+//    //初始化网络图片缓存库(广告轮播)
+//    private void initImageLoader() {
+//        //网络图片例子,结合常用的图片缓存库UIL,你可以根据自己需求自己换其他网络图片库
+//        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().
+//                showImageForEmptyUri(R.mipmap.ic_launcher)
+//                .cacheInMemory(true)
+//                .cacheOnDisk(true).build();
+//
+//        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+//                this)
+//                .defaultDisplayImageOptions(defaultOptions)
+//                .threadPriority(Thread.NORM_PRIORITY - 2)
+//                .denyCacheImageMultipleSizesInMemory()
+//                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+//                .tasksProcessingOrder(QueueProcessingType.LIFO).build();
+//        ImageLoader.getInstance().init(config);
+//    }
 }
