@@ -5,6 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.qf.util.DownUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +22,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DownUtil.OnDownListener {
 
     //顶部轮播图
     private ConvenientBanner convenientBanner;
@@ -25,7 +32,53 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initCarousel();
+//        initCarousel();
+
+        carousel();
+    }
+
+    private void carousel() {
+        convenientBanner = (ConvenientBanner) findViewById(R.id.convenientBanner_showGoods);
+        new DownUtil().setOnDownListener(this).downJSON(Contact.PLAN_HEADIMG);
+
+    }
+
+    @Override
+    public Object paresJson(String json) {
+        if (json != null){
+            try {
+                JSONArray jarray = new JSONObject(json).optJSONArray("data");
+                TypeToken<List<CarouselEntity.DataBean>> tt = new TypeToken<List<CarouselEntity.DataBean>>(){};
+                return new Gson().fromJson(jarray.toString(),tt.getType());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void downSucc(Object object) {
+        if (object != null){
+            List<CarouselEntity.DataBean> dataBeanList = (List<CarouselEntity.DataBean>) object;
+            for (int i = 0; i < dataBeanList.size(); i++) {
+                imglist.add(dataBeanList.get(i).getPhoto().getPhoto_url());
+            }
+
+            convenientBanner
+                    .setPages(new CBViewHolderCreator<NetworkImageHolderView>() {
+                        @Override
+                        public NetworkImageHolderView createHolder() {
+                            return new NetworkImageHolderView();
+                        }
+                    }, imglist)
+                    .setPageIndicator(new int[]{R.mipmap.abc_btn_radio_to_on_mtrl_000,
+                            R.mipmap.abc_btn_radio_to_on_mtrl_015})
+                    .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
+                    .startTurning(500);
+
+        }
+
     }
 
     private void initCarousel() {
@@ -70,4 +123,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

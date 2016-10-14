@@ -6,6 +6,7 @@ package com.qf.picnotext;
 public interface Contact {
     //头部图片
     String BASE_URL = "http://q.chanyouji.com/";
+    String PLAN_HEADIMG="http://q.chanyouji.com/api/v1/adverts.json?market=qq&first_launch=false";
 //    String PLAN_HEADIMG="api/v1/adverts.json?market=qq&first_launch=false";
     //攻略 目的地列表
     String PLAN_DESTINATIONS="http://q.chanyouji.com/api/v2/destinations.json";
