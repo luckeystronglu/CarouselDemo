@@ -1,1 +1,1 @@
-include ':app', ':mycarouseldemo', ':localpiccarousel'
+include ':app', ':mycarouseldemo', ':localpiccarousel', ':picnotext'
