@@ -7,8 +7,14 @@
     tools:context=".MainActivity">
 
     <com.youth.banner.Banner
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:text="Hello World!"/>
+        android:text="Hello World!"
+        app:indicator_margin="2dp"
+        app:indicator_height="10dp"
+        app:indicator_width="10dp"
+        app:indicator_drawable_selected="@mipmap/abc_btn_radio_to_on_mtrl_015"
+        app:indicator_drawable_unselected="@mipmap/abc_btn_radio_to_on_mtrl_000"/>
 </RelativeLayout>

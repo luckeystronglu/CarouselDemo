@@ -82,7 +82,11 @@ public class MainActivity extends AppCompatActivity {
                 banner.setImages(imgs)
                         .setImageLoader(new GlideImageLoader())
                         .setBannerTitles(titles)
-                        .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
+                        //不设置setBannerStyle则只有图标指示器
+//                        .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)//文字+指示图标
+//                        .setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE) //文字+数字指示
+//                        .setBannerStyle(BIND_NOT_FOREGROUND) //文字在阴影区，图标指示在上
+//                        .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)//只有图标指示器
                         .setBannerAnimation(Transformer.DepthPage)
                         .setDelayTime(3000)
                         .setIndicatorGravity(BannerConfig.CENTER)
